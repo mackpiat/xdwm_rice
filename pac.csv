@@ -19,6 +19,8 @@ P,slock
 P,unclutter
 P,wireplumber
 P,xclip
+P,xwallpaper
+P,xdotool
 P,xdg-user-dirs
 P,xdg-utils
 P,zathura
