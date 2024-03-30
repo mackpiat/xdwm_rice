@@ -6,8 +6,6 @@
 - [dwm-hide_vacant_tags-6.4.diff](https://dwm.suckless.org/patches/hide_vacant_tags/)
 - [dwm-restartsig-20180523-6.2.diff](https://dwm.suckless.org/patches/restartsig/)
 - [dwm-restoreafterrestart-20220709-d3f93c7.diff](https://dwm.suckless.org/patches/restoreafterrestart/)
-- [dwm-zoomswap-6.2.diff](https://dwm.suckless.org/patches/zoomswap/)
-
 ## patches used in st-0.9
 - [st-0.8.5-autocomplete-20220327-230120.diff](https://st.suckless.org/patches/autocomplete/)
 - [st-anysize-20220718-baa9357.diff](https://st.suckless.org/patches/anysize/)
@@ -15,3 +13,4 @@
 - [st-font2-0.8.5.diff](https://st.suckless.org/patches/font2/)
 - [st-gruvbox-dark-0.8.5.diff](https://st.suckless.org/patches/gruvbox/)
 - [st-scrollback-20210507-4536f46.diff, st-scrollback-mouse-20220127-2c5edf2.diff, st-scrollback-mouse-increment-0.8.2.diff](https://st.suckless.org/patches/scrollback/)
+- [7672445bab01cb4e861651dc540566ac22e25812.diff](https://github.com/nimaipatel/st/blob/master/patches/7672445bab01cb4e861651dc540566ac22e25812.diff)
