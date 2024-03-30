@@ -6,7 +6,8 @@
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
 static char *font = "Hack:pixelsize=18:antialias=true:autohint=true";
-static int borderpx = 2;
+static char *font2[] = { "JoyPixels:pixelsize=18:antialias=true:autohint=true" };
+static int borderpx = 0;
 
 /*
  * What program is execed by st depends of these precedence rules:
@@ -198,16 +199,25 @@ static Shortcut shortcuts[] = {
 	{ ControlMask,          XK_Print,       toggleprinter,  {.i =  0} },
 	{ ShiftMask,            XK_Print,       printscreen,    {.i =  0} },
 	{ XK_ANY_MOD,           XK_Print,       printsel,       {.i =  0} },
-	{ TERMMOD,              XK_Prior,       zoom,           {.f = +1} },
-	{ TERMMOD,              XK_Next,        zoom,           {.f = -1} },
+	{ MODKEY|ShiftMask,     XK_J,           zoom,           {.f = +1} },
+	{ MODKEY|ShiftMask,     XK_K,           zoom,           {.f = -1} },
 	{ TERMMOD,              XK_Home,        zoomreset,      {.f =  0} },
-	{ TERMMOD,              XK_C,           clipcopy,       {.i =  0} },
-	{ TERMMOD,              XK_V,           clippaste,      {.i =  0} },
-	{ TERMMOD,              XK_Y,           selpaste,       {.i =  0} },
+	{ MODKEY,               XK_c,           clipcopy,       {.i =  0} },
+	{ MODKEY,               XK_v,           clippaste,      {.i =  0} },
+	{ MODKEY,               XK_y,           selpaste,       {.i =  0} },
 	{ ShiftMask,            XK_Insert,      selpaste,       {.i =  0} },
 	{ TERMMOD,              XK_Num_Lock,    numlock,        {.i =  0} },
 	{ ShiftMask,            XK_Page_Up,     kscrollup,      {.i = -1} },
 	{ ShiftMask,            XK_Page_Down,   kscrolldown,    {.i = -1} },
+	{ ACMPL_MOD,            XK_slash,       autocomplete,   { .i = ACMPL_WORD        } },
+	{ ACMPL_MOD,            XK_period,      autocomplete,   { .i = ACMPL_FUZZY_WORD  } },
+	{ ACMPL_MOD,            XK_comma,       autocomplete,   { .i = ACMPL_FUZZY       } },
+	{ ACMPL_MOD,            XK_apostrophe,  autocomplete,   { .i = ACMPL_SUFFIX      } },
+	{ ACMPL_MOD,            XK_semicolon,   autocomplete,   { .i = ACMPL_SURROUND    } },
+	{ ACMPL_MOD,            XK_bracketright,autocomplete,   { .i = ACMPL_WWORD       } },
+	{ ACMPL_MOD,            XK_bracketleft, autocomplete,   { .i = ACMPL_FUZZY_WWORD } },
+	{ ACMPL_MOD,            XK_equal,       autocomplete,   { .i = ACMPL_UNDO        } },
+
 };
 
 /*
@@ -479,3 +489,4 @@ static char ascii_printable[] =
 	" !\"#$%&'()*+,-./0123456789:;<=>?"
 	"@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_"
 	"`abcdefghijklmnopqrstuvwxyz{|}~";
+
