@@ -6,6 +6,8 @@
 - [dwm-hide_vacant_tags-6.4.diff](https://dwm.suckless.org/patches/hide_vacant_tags/)
 - [dwm-restartsig-20180523-6.2.diff](https://dwm.suckless.org/patches/restartsig/)
 - [dwm-restoreafterrestart-20220709-d3f93c7.diff](https://dwm.suckless.org/patches/restoreafterrestart/)
+- [dwm-statuscmd-20210405-67d76bd.diff](https://dwm.suckless.org/patches/statuscmd/)
+
 ## patches used in st-0.9
 - [st-0.8.5-autocomplete-20220327-230120.diff](https://st.suckless.org/patches/autocomplete/)
 - [st-anysize-20220718-baa9357.diff](https://st.suckless.org/patches/anysize/)
