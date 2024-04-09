@@ -5,6 +5,7 @@
 #define TERMCLASS "St"
 #define BROWSER "firefox"
 #define SESSION_FILE "/tmp/dwm-session"
+#define STATUSBAR "dwmblocks"
 
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
@@ -16,7 +17,7 @@ static const unsigned int gappov    = 10;       /* vert outer gap between window
 static int smartgaps                = 0;        /* 1 means no outer gap when there is only one window */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "Hack:size=12" };
+static const char *fonts[]          = { "Hack:size=12", "NotoColorEmoji:pixelsize=14:antialias=true:autohint=true" };
 static const char dmenufont[]       = "Hack:size=12";
 static const char col_gray1[]       = "#282828";
 static const char col_gray2[]       = "#458588";
@@ -94,8 +95,8 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
-	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
-	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
+	{ MODKEY,                       XK_a,      incnmaster,     {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_a,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
 	{ MODKEY,                       XK_space,  zoom,           {0} },
@@ -117,7 +118,7 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_i,      setlayout,      {.v = &layouts[12]} }, //dwindle
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
-	{ MODKEY|ShiftMask,             XK_f,      togglefullscr,  {0} },
+	{ MODKEY,                       XK_f,      togglefullscr,  {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
 	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
@@ -127,6 +128,8 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_BackSpace, spawn,       {.v = (const char*[]) { "sysact", NULL } } },
 	{ MODKEY|ShiftMask,             XK_BackSpace, spawn,       {.v = (const char*[]) { "sysact", NULL } } },
 	{ MODKEY|ShiftMask,             XK_q,      spawn,          {.v = (const char*[]) { "sysact", NULL } } },
+	{ 0,                            XK_Print,      spawn,      SHCMD("maim $HOME/Pictures/pic-full-$(date '+%y%m%d-%H%M-%S').png") },
+	{ MODKEY,                       XK_Print,      spawn,      {.v = (const char*[]) { "scrsht", NULL } } },
 	{ MODKEY|ShiftMask,             XK_h,      setcfact,       {.f = +0.25} },
 	{ MODKEY|ShiftMask,             XK_l,      setcfact,       {.f = -0.25} },
 	{ MODKEY|ShiftMask,             XK_o,      setcfact,       {.f =  0.00} },
@@ -154,7 +157,11 @@ static const Button buttons[] = {
 	{ ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
 	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
 	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
-	{ ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } },
+	{ ClkStatusText,        0,              Button1,        sigstatusbar,   {.i = 1} },
+	{ ClkStatusText,        0,              Button2,        sigstatusbar,   {.i = 2} },
+	{ ClkStatusText,        0,              Button3,        sigstatusbar,   {.i = 3} },
+	{ ClkStatusText,        0,              Button4,        sigstatusbar,   {.i = 4} },
+	{ ClkStatusText,        0,              Button5,        sigstatusbar,   {.i = 5} },
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
 	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
 	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
