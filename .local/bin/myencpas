@@ -4,18 +4,26 @@ checkDrun() {
 	runPacks=("wofi" "dmenu")
 	shell=("zsh" "bash")
 	profile=("\$HOME\/.config\/shell\/profile" "\$HOME\/.bash_profile")
-	export myrun="dmenu"
-	export myshell="zsh"
-	export myprofile="$HOME/.config/shell/profile"
+	wald() {
+		export myrun="wofi"
+		export myshell="zsh"
+		export myprofile="$HOME/.config/shell/profile"
+	}
+	xo() {
+		export myrun="dmenu"
+		export myshell="zsh"
+		export myprofile="$HOME/.config/shell/profile"
+	}
+	[ "$XDG_SESSION_TYPE" = "wayland" ] && wald || xo
 	if [[ ${myrun} == "" || ${myshell} == "" || ${myprofile} == "" ]]; then
 		for x in "${runPacks[@]}"; do
-			which ${x} >/dev/null
+			pacman -Qq ${x} >/dev/null || which ${x} >/dev/null
 			if (( $? == 0 )); then
 				sed -i "0,/export myrun=\"\"/s//export myrun=\"${x}\"/" $(find ~ -name "myencpas")
 			fi
 		done
 		for y in "${shell[@]}"; do
-			shellChoice=$(echo $SHELL | awk '{split($0,i,"/"); print i[4];}')
+			shellChoice=$(echo $SHELL | awk '{split($0,i,"/"); print i[3];}')
 			if [[ "${shellChoice}" == ${y} ]]; then
 				sed -i "0,/export myshell=\"\"/s//export myshell=\"${y}\"/" $(find ~ -name "myencpas")
 			fi
@@ -104,7 +112,6 @@ initP() {
 }
 
 getornew() {
-	checkDrun &&
 	choice=$(printf "get\nnew\ngenerate\nedit" | ${myMenu} -p "mypas.") &&
 	case $choice in
 		get) getP;;

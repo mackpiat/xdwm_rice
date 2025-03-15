@@ -20,6 +20,13 @@ Plug 'vim-airline/vim-airline'
 Plug 'tpope/vim-commentary'
 Plug 'ap/vim-css-color'
 Plug 'morhetz/gruvbox'
+Plug 'lervag/vimtex'
+"Plug 'ycm-core/YouCompleteMe'
+Plug 'mattn/emmet-vim'
+"Plug 'dart-lang/dart-vim-plugin'
+"Plug 'thosakwe/vim-flutter'
+"Plug 'natebosch/vim-lsc'
+"Plug 'natebosch/vim-lsc-dart'
 call plug#end()
 
 set title
@@ -69,14 +76,6 @@ set noshowcmd
 	imap <leader>i <esc>:call ToggleIPA()<CR>a
 	nm <leader>q :call ToggleProse()<CR>
 
-" vim-airline
-	if !exists('g:airline_symbols')
-  	    let g:airline_symbols = {}
-	endif
-	let g:airline_symbols.colnr = ' C:'
-	let g:airline_symbols.linenr = ' L:'
-	let g:airline_symbols.maxlinenr = '☰ '
-
 " Shortcutting split navigation, saving a keypress:
 	map <C-h> <C-w>h
 	map <C-j> <C-w>j
@@ -103,7 +102,7 @@ set noshowcmd
 	map <leader>p :!opout "%:p"<CR>
 
 " Runs a script that cleans out tex build files whenever I close out of a .tex file.
-	autocmd VimLeave *.tex !texclear %
+	autocmd VimLeave *.tex !texclr %
 
 " Ensure files are read as what I want:
 	let g:vimwiki_ext2syntax = {'.Rmd': 'markdown', '.rmd': 'markdown','.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
@@ -126,17 +125,10 @@ set noshowcmd
  	autocmd BufWritePre * let currPos = getpos(".")
 	autocmd BufWritePre * %s/\s\+$//e
 	autocmd BufWritePre * %s/\n\+\%$//e
-  autocmd BufWritePre *.[ch] %s/\%$/\r/e " add trailing newline for ANSI C standard
-  autocmd BufWritePre *neomutt* %s/^--$/-- /e " dash-dash-space signature delimiter in emails
   	autocmd BufWritePre * cal cursor(currPos[1], currPos[2])
 
-" When shortcut files are updated, renew bash and ranger configs with new material:
+" When shortcut files are updated, renew bash
 	autocmd BufWritePost bm-files,bm-dirs !shortcuts
-" Run xrdb whenever Xdefaults or Xresources are updated.
-	autocmd BufRead,BufNewFile Xresources,Xdefaults,xresources,xdefaults set filetype=xdefaults
-	autocmd BufWritePost Xresources,Xdefaults,xresources,xdefaults !xrdb %
-" Recompile dwmblocks on config edit.
-	autocmd BufWritePost ~/.local/src/dwmblocks/config.h !cd ~/.local/src/dwmblocks/; sudo make install && { killall -q dwmblocks;setsid -f dwmblocks }
 
 " Turns off highlighting on the bits of code that are changed, so the line that is changed is highlighted but the actual text that has changed stands out on the line and is readable.
 if &diff
@@ -167,11 +159,60 @@ nnoremap <leader>h :call ToggleHiddenAll()<CR>
 " if typed fast without the timeout.
 silent! source ~/.config/nvim/shortcuts.vim
 
+" Backups
+set backup
+set backupdir=~/.config/nvim/backup//
+set directory=~/.config/nvim/swap//
+set undofile
+set undodir=~/.config/nvim/undo//
+
 " Gruvbox
 let g:gruvbox_italic=1
-let g:gruvbox_bold=1
-let g:gruvbox_underline=1
-let g:gruvbox_undercurl=1
 let g:gruvbox_contrast_dark='hard'
 set background=dark
 colorscheme gruvbox
+
+" Autocomplete
+inoremap " ""<left>
+inoremap ' ''<left>
+inoremap ( ()<left>
+inoremap [ []<left>
+inoremap { {}<left>
+
+" VimTex
+filetype plugin indent on
+syntax enable
+let g:vimtex_view_method = 'zathura'
+let g:vimtex_compiler_method = 'latexmk'
+let maplocalleader = ','
+let g:vimtex_indent_enabled = 0
+
+if !exists('g:ycm_semantic_triggers')
+	let g:ycm_semantic_triggers = {}
+endif
+au VimEnter * let g:ycm_semantic_triggers.tex=g:vimtex#re#youcompleteme
+
+if exists("g:loaded_fix_indentkeys")
+    finish
+endif
+
+let g:loaded_fix_indentkeys = 1
+
+" Set indentkeys option again on changed filetype option.
+" This fixes TeX \item indentation in combination with YouCompleteMe.
+" See https://github.com/Valloric/YouCompleteMe/issues/1244
+" You may add more filetypes if necessary.
+autocmd FileType tex,plaintex execute "setlocal indentkeys=" . &indentkeys
+
+" Flutter And Dart
+"call FlutterMenu()
+"nnoremap <leader>fa :FlutterRun<cr>
+"nnoremap <leader>fq :FlutterQuit<cr>
+"nnoremap <leader>fr :FlutterHotReload<cr>
+"nnoremap <leader>fR :FlutterHotRestart<cr>
+"nnoremap <leader>fD :FlutterVisualDebug<cr>
+"
+"let g:dart_style_guide = 2
+"let g:lsc_server_commands = {'dart': 'dart_language_server'}
+"let g:lsc_enable_autocomplete = v:false
+"let g:lsc_auto_map = v:true
